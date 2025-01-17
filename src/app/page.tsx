@@ -1,6 +1,8 @@
+import { PagedResult } from "@/models/PagedResult";
 import AuctionCard from "../components/AuctionCard";
+import { Auction } from "@/models/Auction";
 
-async function getData(): Promise<unknown> {
+async function getData(): Promise<PagedResult<Auction>> {
   const response = await fetch("http://localhost:6001/search");
 
   if (!response.ok) {
@@ -16,8 +18,8 @@ export default async function Home() {
   return (
     <div className="grid grid-cols-4 gap-6">
       {data &&
-        data.results.map((result: any) => (
-          <AuctionCard key={result.id} {...result} />
+        data.results.map((auction: Auction) => (
+          <AuctionCard key={auction.id} auction={auction} />
         ))}
     </div>
   );
