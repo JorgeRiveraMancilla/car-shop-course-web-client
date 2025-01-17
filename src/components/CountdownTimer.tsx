@@ -32,8 +32,7 @@ const renderer = ({
         <span>Terminado</span>
       ) : (
         <span suppressHydrationWarning={true}>
-          ` ${zeroPad(days)}:${zeroPad(hours)}
-          :${zeroPad(minutes)}:${zeroPad(seconds)}`
+          {zeroPad(days)}:{zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}
         </span>
       )}
     </div>
