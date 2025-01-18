@@ -3,6 +3,7 @@
 import { getData } from "@/actions/auction";
 import AppPagination from "@/components/AppPagination";
 import AuctionCard from "@/components/AuctionCard";
+import AuctionFilter from "@/components/AuctionFilter";
 import { Auction } from "@/models/Auction";
 import { useEffect, useState } from "react";
 
@@ -10,20 +11,28 @@ export default function Home() {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [pageCount, setPageCount] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(8);
 
   useEffect(() => {
-    getData(pageNumber).then((data) => {
+    getData(pageNumber, pageSize).then((data) => {
       setAuctions(data.results);
       setPageCount(data.pageCount);
     });
-  }, [pageNumber]);
+  }, [pageNumber, pageSize]);
 
-  if (!auctions || auctions.length == 0) {
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setPageNumber(1); // Reset to first page when changing page size
+  };
+
+  if (!auctions || auctions.length === 0) {
     return <h4>Cargando...</h4>;
   }
 
   return (
     <div className="space-y-6 container mx-auto px-4 py-6">
+      <AuctionFilter pageSize={pageSize} setPageSize={handlePageSizeChange} />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {auctions.map((auction: Auction) => (
           <AuctionCard key={auction.id} auction={auction} />
