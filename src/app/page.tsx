@@ -3,6 +3,7 @@
 import { getData } from "@/actions/auction";
 import AppPagination from "@/components/AppPagination";
 import AuctionCard from "@/components/auction-card/AuctionCard";
+import EmptyState from "@/components/auction-card/EmptyState";
 import AuctionFilter from "@/components/auction-filter/AuctionFilter";
 import { useParamsStore } from "@/hooks/useParamsStore";
 import { Auction } from "@/models/Auction";
@@ -19,6 +20,7 @@ export default function Home() {
       pageSize: state.pageSize,
       searchTerm: state.searchTerm,
       orderBy: state.orderBy,
+      filterBy: state.filterBy,
     }))
   );
   const setParams = useParamsStore((state) => state.setParams);
@@ -42,17 +44,23 @@ export default function Home() {
     <div className="space-y-6 container mx-auto px-4 py-6">
       <AuctionFilter />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {data.results.map((auction: Auction) => (
-          <AuctionCard key={auction.id} auction={auction} />
-        ))}
-      </div>
+      {data.results.length > 0 ? (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {data.results.map((auction: Auction) => (
+              <AuctionCard key={auction.id} auction={auction} />
+            ))}
+          </div>
 
-      <AppPagination
-        currentPage={params.pageNumber}
-        totalPages={data.pageCount}
-        handlePageChange={setPageNumber}
-      />
+          <AppPagination
+            currentPage={params.pageNumber}
+            totalPages={data.pageCount}
+            handlePageChange={setPageNumber}
+          />
+        </>
+      ) : (
+        <EmptyState />
+      )}
     </div>
   );
 }
