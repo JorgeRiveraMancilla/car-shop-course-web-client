@@ -1,6 +1,7 @@
 import { Auction } from "@/models/Auction";
 import CarImage from "./CarImage";
 import CountdownTimer from "./CountdownTimer";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 type Props = {
   auction: Auction;
@@ -8,22 +9,24 @@ type Props = {
 
 export default function AuctionCard({ auction }: Props) {
   return (
-    <a href="#" className="group">
-      <div className="relative w-full bg-gray-200 aspect-video rounded-lg overflow-hidden">
-        <CarImage imageUrl={auction.imageUrl} />
+    <Card className="group hover:shadow-lg transition overflow-hidden">
+      <CardContent className="p-0">
+        <div className="relative">
+          <CarImage imageUrl={auction.imageUrl} />
 
-        <div className="absolute bottom-2 left-2">
-          <CountdownTimer auctionEnd={auction.auctionEnd} />
+          <div className="absolute bottom-2 left-2">
+            <CountdownTimer auctionEnd={auction.auctionEnd} />
+          </div>
         </div>
-      </div>
+      </CardContent>
 
-      <div className="flex justify-between items-center mt-4">
-        <h3 className="text-gray-700">
+      <CardFooter className="flex justify-between items-center p-4">
+        <h3 className="font-semibold text-sm text-gray-700">
           {auction.make} {auction.model}
         </h3>
 
         <p className="font-semibold text-sm">{auction.year}</p>
-      </div>
-    </a>
+      </CardFooter>
+    </Card>
   );
 }

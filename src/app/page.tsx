@@ -29,8 +29,8 @@ export default async function Home({ searchParams }: Props) {
   const data = await getData(page);
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-4 gap-6">
+    <div className="space-y-6 container mx-auto px-4 py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {data.results.map((auction: Auction) => (
           <AuctionCard key={auction.id} auction={auction} />
         ))}

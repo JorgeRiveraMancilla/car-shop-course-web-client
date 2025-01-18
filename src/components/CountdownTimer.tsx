@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import Countdown, { zeroPad } from "react-countdown";
 
 const renderer = ({
@@ -15,26 +16,37 @@ const renderer = ({
   seconds: number;
   completed: boolean;
 }) => {
-  return (
-    <div
-      className={`
-            border-2 border-white text-white py-1 px-2 rounded-lg flex justify-center
-        ${
-          completed
-            ? "bg-red-600"
-            : days === 0 && hours < 10
-            ? "bg-amber-600"
-            : "bg-green-600"
-        }}
-        `}
-    >
-      {completed ? (
-        <span>Terminado</span>
-      ) : (
+  const totalHours = days * 24 + hours;
+
+  const getStatusColor = () => {
+    switch (true) {
+      case completed:
+        return "bg-red-500";
+      case totalHours < 24:
+        return "bg-amber-500";
+      default:
+        return "bg-green-500";
+    }
+  };
+
+  const getStatusText = () => {
+    if (completed) return <span>Terminado</span>;
+    else
+      return (
         <span suppressHydrationWarning={true}>
           {zeroPad(days)}:{zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}
         </span>
+      );
+  };
+
+  return (
+    <div
+      className={cn(
+        "border border-white text-white py-1 px-3 rounded-lg flex justify-center text-sm shadow-md backdrop-blur-sm",
+        getStatusColor()
       )}
+    >
+      {getStatusText()}
     </div>
   );
 };
@@ -44,9 +56,5 @@ type Props = {
 };
 
 export default function CountdownTimer({ auctionEnd }: Props) {
-  return (
-    <div>
-      <Countdown date={auctionEnd} renderer={renderer} />
-    </div>
-  );
+  return <Countdown date={auctionEnd} renderer={renderer} />;
 }
