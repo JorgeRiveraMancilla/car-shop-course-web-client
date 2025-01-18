@@ -6,9 +6,14 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+type PaginationButtonProps = {
+  className?: string;
+  onClick: () => void;
+};
 
 type Props = {
   currentPage: number;
@@ -21,11 +26,41 @@ export default function AppPagination({
   totalPages,
   handlePageChange,
 }: Props) {
+  const CustomPaginationPrevious = ({
+    className,
+    onClick,
+  }: PaginationButtonProps) => (
+    <Button
+      variant="outline"
+      className={`gap-1 pl-2.5 ${className}`}
+      onClick={onClick}
+    >
+      <ChevronLeft className="h-4 w-4" />
+
+      <span>Anterior</span>
+    </Button>
+  );
+
+  const CustomPaginationNext = ({
+    className,
+    onClick,
+  }: PaginationButtonProps) => (
+    <Button
+      variant="outline"
+      className={`gap-1 pr-2.5 ${className}`}
+      onClick={onClick}
+    >
+      <span>Siguiente</span>
+
+      <ChevronRight className="h-4 w-4" />
+    </Button>
+  );
+
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious
+          <CustomPaginationPrevious
             onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
             className={
               currentPage <= 1
@@ -70,7 +105,7 @@ export default function AppPagination({
         })}
 
         <PaginationItem>
-          <PaginationNext
+          <CustomPaginationNext
             onClick={() =>
               currentPage < totalPages && handlePageChange(currentPage + 1)
             }
