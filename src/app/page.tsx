@@ -2,7 +2,7 @@
 
 import { getData } from "@/actions/auction";
 import AppPagination from "@/components/AppPagination";
-import AuctionCard from "@/components/AuctionCard";
+import AuctionCard from "@/components/auction-card/AuctionCard";
 import AuctionFilter from "@/components/AuctionFilter";
 import { useParamsStore } from "@/hooks/useParamsStore";
 import { Auction } from "@/models/Auction";
