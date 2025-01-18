@@ -3,7 +3,7 @@
 import { getData } from "@/actions/auction";
 import AppPagination from "@/components/AppPagination";
 import AuctionCard from "@/components/auction-card/AuctionCard";
-import AuctionFilter from "@/components/AuctionFilter";
+import AuctionFilter from "@/components/auction-filter/AuctionFilter";
 import { useParamsStore } from "@/hooks/useParamsStore";
 import { Auction } from "@/models/Auction";
 import { PagedResult } from "@/models/PagedResult";
@@ -18,6 +18,7 @@ export default function Home() {
       pageNumber: state.pageNumber,
       pageSize: state.pageSize,
       searchTerm: state.searchTerm,
+      orderBy: state.orderBy,
     }))
   );
   const setParams = useParamsStore((state) => state.setParams);
