@@ -22,7 +22,7 @@ const renderer = ({
     switch (true) {
       case completed:
         return "bg-red-500";
-      case totalHours < 24:
+      case totalHours < 6:
         return "bg-amber-500";
       default:
         return "bg-green-500";
