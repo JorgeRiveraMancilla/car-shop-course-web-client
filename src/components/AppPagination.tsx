@@ -9,20 +9,18 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useRouter } from "next/navigation";
 
 type Props = {
   currentPage: number;
   totalPages: number;
+  handlePageChange: (page: number) => void;
 };
 
-export default function AppPagination({ currentPage, totalPages }: Props) {
-  const router = useRouter();
-
-  const handlePageChange = (page: number) => {
-    router.push(`/?page=${page}`);
-  };
-
+export default function AppPagination({
+  currentPage,
+  totalPages,
+  handlePageChange,
+}: Props) {
   return (
     <Pagination>
       <PaginationContent>

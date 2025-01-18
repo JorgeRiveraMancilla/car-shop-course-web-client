@@ -1,42 +1,40 @@
+"use client";
+
+import { getData } from "@/actions/auction";
 import AppPagination from "@/components/AppPagination";
 import AuctionCard from "@/components/AuctionCard";
 import { Auction } from "@/models/Auction";
-import { PagedResult } from "@/models/PagedResult";
+import { useEffect, useState } from "react";
 
-async function getData(pageNumber: number = 1): Promise<PagedResult<Auction>> {
-  const response = await fetch(
-    `http://localhost:6001/search?pageSize=8&pageNumber=${pageNumber}`,
-    {
-      cache: "no-store",
-    }
-  );
+export default function Home() {
+  const [auctions, setAuctions] = useState<Auction[]>([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
+  useEffect(() => {
+    getData(pageNumber).then((data) => {
+      setAuctions(data.results);
+      setPageCount(data.pageCount);
+    });
+  }, [pageNumber]);
+
+  if (!auctions || auctions.length == 0) {
+    return <h4>Cargando...</h4>;
   }
-
-  return response.json();
-}
-
-type Props = {
-  searchParams: {
-    page: string;
-  };
-};
-
-export default async function Home({ searchParams }: Props) {
-  const page = Number(searchParams.page) || 1;
-  const data = await getData(page);
 
   return (
     <div className="space-y-6 container mx-auto px-4 py-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {data.results.map((auction: Auction) => (
+        {auctions.map((auction: Auction) => (
           <AuctionCard key={auction.id} auction={auction} />
         ))}
       </div>
 
-      <AppPagination currentPage={page} totalPages={data.pageCount} />
+      <AppPagination
+        currentPage={pageNumber}
+        totalPages={pageCount}
+        handlePageChange={setPageNumber}
+      />
     </div>
   );
 }
