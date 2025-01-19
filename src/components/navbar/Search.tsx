@@ -1,3 +1,5 @@
+"use client";
+
 import { useParamsStore } from "@/hooks/useParamsStore";
 import { ChangeEvent, FormEvent } from "react";
 import { Input } from "../ui/input";

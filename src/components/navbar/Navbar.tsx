@@ -1,7 +1,4 @@
-"use client";
-
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import LoginButton from "./LoginButton";
 import Logo from "./Logo";
 import Search from "./Search";
 
@@ -13,23 +10,7 @@ export default function Navbar() {
 
         <Search />
 
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            asChild
-            className="text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-          >
-            <Link href="/login">Iniciar Sesión</Link>
-          </Button>
-
-          <Button
-            variant="default"
-            asChild
-            className="bg-black hover:bg-gray-800 text-white"
-          >
-            <Link href="/register">Registrarse</Link>
-          </Button>
-        </div>
+        <LoginButton />
       </div>
     </header>
   );

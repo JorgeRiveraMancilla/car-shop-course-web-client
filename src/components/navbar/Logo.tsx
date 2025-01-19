@@ -1,3 +1,5 @@
+"use client";
+
 import { useParamsStore } from "@/hooks/useParamsStore";
 import { AiOutlineCar } from "react-icons/ai";
 
