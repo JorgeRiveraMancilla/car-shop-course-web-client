@@ -26,6 +26,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     } as OIDCConfig<DuendeIDServerProfile>),
   ],
   callbacks: {
+    async authorized({ auth }) {
+      return !!auth;
+    },
     async jwt({ token, profile, account }) {
       if (account?.access_token) {
         token.accessToken = account.access_token;
@@ -37,7 +40,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       if (token) {
-        session.user = session.user || {};
         session.user.username = token.username;
         session.accessToken = token.accessToken;
       }
