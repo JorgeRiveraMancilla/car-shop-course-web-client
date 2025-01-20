@@ -4,12 +4,15 @@ import { useParamsStore } from "@/hooks/useParamsStore";
 import { ChangeEvent, FormEvent } from "react";
 import { Input } from "../ui/input";
 import { CiSearch } from "react-icons/ci";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Search() {
   const setParams = useParamsStore((state) => state.setParams);
   const searchValue = useParamsStore((state) => state.searchValue);
   const setSearchValue = useParamsStore((state) => state.setSearchValue);
   const searchInputId = "search-input";
+  const router = useRouter();
+  const pathname = usePathname();
 
   function onChangeSearch(e: ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value);
@@ -17,6 +20,9 @@ export default function Search() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (pathname !== "/") {
+      router.push("/");
+    }
     setParams({ searchTerm: searchValue.trim() });
   }
 
