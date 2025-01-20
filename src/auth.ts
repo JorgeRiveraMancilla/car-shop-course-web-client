@@ -20,6 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorization: {
         params: {
           scope: "openid profile auctionApp",
+          prompt: "login",
         },
       },
       checks: ["pkce", "state"],

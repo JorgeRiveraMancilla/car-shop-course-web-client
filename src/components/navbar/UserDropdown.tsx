@@ -17,12 +17,18 @@ interface Props {
 }
 
 export default function UserDropdown({ username }: Props) {
+  const handleSignOut = async () => {
+    await signOut({
+      callbackUrl: "/",
+      redirect: true,
+    });
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
           <User2 className="h-5 w-5" />
-
           <span>{username.toUpperCase()}</span>
         </Button>
       </DropdownMenuTrigger>
@@ -44,7 +50,7 @@ export default function UserDropdown({ username }: Props) {
 
         <DropdownMenuItem
           className="cursor-pointer text-red-600 focus:text-red-600"
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={handleSignOut}
         >
           Cerrar sesión
         </DropdownMenuItem>
