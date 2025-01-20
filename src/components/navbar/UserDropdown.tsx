@@ -41,7 +41,7 @@ export default function UserDropdown({ username }: Props) {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link href="/vender-auto" className="cursor-pointer">
+          <Link href="/auction/create" className="cursor-pointer">
             Vender mi auto
           </Link>
         </DropdownMenuItem>
