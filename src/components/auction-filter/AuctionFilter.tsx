@@ -56,7 +56,7 @@ export default function AuctionFilter() {
   const filterBy = useParamsStore((state) => state.filterBy);
 
   return (
-    <div className="flex items-center justify-between mb-4">
+    <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         <span className="text-sm text-muted-foreground mr-2">Ordenar por:</span>
 

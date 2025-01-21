@@ -41,7 +41,7 @@ export default function Home() {
   }
 
   return (
-    <div className="space-y-6 container mx-auto px-4 py-6">
+    <div className="flex flex-col gap-4">
       <AuctionFilter />
 
       {data.results.length > 0 ? (
