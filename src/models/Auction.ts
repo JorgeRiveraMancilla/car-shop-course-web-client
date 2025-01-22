@@ -3,11 +3,11 @@ export type Auction = {
   reservePrice: number;
   seller: string;
   winner?: string;
-  soldAmount: number;
-  currentHighBid: number;
-  createdAt: string;
-  updatedAt: string;
-  auctionEnd: string;
+  soldAmount?: number;
+  currentHighBid?: number;
+  createdAt: Date;
+  updatedAt: Date;
+  auctionEnd: Date;
   status: string;
   make: string;
   model: string;
