@@ -16,3 +16,22 @@ export type Auction = {
   mileage: number;
   imageUrl: string;
 };
+
+export type CreateAuction = {
+  make: string;
+  model: string;
+  year: number;
+  color: string;
+  mileage: number;
+  imageUrl: string;
+  reservePrice: number;
+  auctionEnd: Date;
+};
+
+export type UpdateAuction = {
+  make?: string;
+  model?: string;
+  year?: number;
+  color?: string;
+  mileage?: number;
+};

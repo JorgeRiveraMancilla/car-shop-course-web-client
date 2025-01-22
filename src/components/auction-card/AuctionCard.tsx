@@ -1,4 +1,4 @@
-import { Auction } from "@/models/auction";
+import { Auction } from "@/models/TAuctionModel";
 import CarImage from "./CarImage";
 import CountdownTimer from "./CountdownTimer";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
