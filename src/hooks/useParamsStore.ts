@@ -1,13 +1,8 @@
+import { SearchParams } from "@/models/searchModel";
 import { create } from "zustand";
 
-type State = {
-  pageNumber: number;
-  pageSize: number;
-  pageCount: number;
-  searchTerm: string;
+type State = SearchParams & {
   searchValue: string;
-  orderBy: string;
-  filterBy: string;
 };
 
 type Actions = {
@@ -19,7 +14,6 @@ type Actions = {
 const initialState: State = {
   pageNumber: 1,
   pageSize: 12,
-  pageCount: 1,
   searchTerm: "",
   searchValue: "",
   orderBy: "make",
