@@ -1,4 +1,4 @@
-import { Auction } from "@/models/TAuctionModel";
+import { Auction } from "@/models/auctionModel";
 import CarImage from "./CarImage";
 import CountdownTimer from "./CountdownTimer";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -15,7 +15,7 @@ export default function AuctionCard({ auction }: Props) {
           <CarImage imageUrl={auction.imageUrl} />
 
           <div className="absolute bottom-2 left-2">
-            <CountdownTimer auctionEnd={auction.auctionEnd} />
+            <CountdownTimer auctionEnd={auction.auctionEnd.toISOString()} />
           </div>
         </div>
       </CardContent>
