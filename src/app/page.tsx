@@ -1,19 +1,20 @@
 "use client";
 
-import { getData } from "@/actions/auction";
 import AppPagination from "@/components/AppPagination";
 import AuctionCard from "@/components/auction-card/AuctionCard";
 import EmptyState from "@/components/auction-card/EmptyState";
 import AuctionFilter from "@/components/auction-filter/AuctionFilter";
 import { useParamsStore } from "@/hooks/useParamsStore";
-import { Auction } from "@/models/TAuctionModel";
-import { PagedResult } from "@/models/Generic";
-import queryString from "query-string";
+import { Auction } from "@/models/auctionModel";
+import { SearchResult } from "@/models/searchModel";
+import searchClient from "@/services/SearchClient";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
 export default function Home() {
-  const [data, setData] = useState<PagedResult<Auction>>();
+  const [data, setData] = useState<SearchResult<Auction>>();
+  const [loading, setLoading] = useState(true);
+
   const params = useParamsStore(
     useShallow((state) => ({
       pageNumber: state.pageNumber,
@@ -24,20 +25,33 @@ export default function Home() {
     }))
   );
   const setParams = useParamsStore((state) => state.setParams);
-  const url = queryString.stringifyUrl({ url: "", query: params });
-
-  function setPageNumber(pageNumber: number): void {
-    setParams({ pageNumber });
-  }
 
   useEffect(() => {
-    getData(url).then((data) => {
-      setData(data);
-    });
-  }, [url]);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const result = await searchClient.searchItems(params);
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching auctions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [params]);
+
+  const handlePageChange = (pageNumber: number): void => {
+    setParams({ pageNumber });
+  };
+
+  if (loading) {
+    return <h4>Cargando...</h4>;
+  }
 
   if (!data) {
-    return <h4>Cargando...</h4>;
+    return <h4>Error cargando los datos</h4>;
   }
 
   return (
@@ -55,7 +69,7 @@ export default function Home() {
           <AppPagination
             currentPage={params.pageNumber}
             totalPages={data.pageCount}
-            handlePageChange={setPageNumber}
+            handlePageChange={handlePageChange}
           />
         </>
       ) : (
