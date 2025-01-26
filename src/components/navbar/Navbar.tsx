@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/actions/auth";
+import { getCurrentUser } from "@/actions/authAction";
 import LoginButton from "./LoginButton";
 import Logo from "./Logo";
 import Search from "./Search";
