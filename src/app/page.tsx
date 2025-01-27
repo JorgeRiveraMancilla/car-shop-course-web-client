@@ -1,9 +1,9 @@
 "use client";
 
-import AppPagination from "@/components/AppPagination";
-import AuctionCard from "@/components/auction-card/AuctionCard";
+import AppPagination from "@/components/pagination";
+import AuctionCard from "@/components/auction-card";
 import EmptyState from "@/components/auction-card/EmptyState";
-import AuctionFilter from "@/components/auction-filter/AuctionFilter";
+import AuctionFilter from "@/components/auction-filter";
 import { useParamsStore } from "@/hooks/useParamsStore";
 import { Auction } from "@/models/auctionModel";
 import { SearchResult } from "@/models/searchModel";
