@@ -15,7 +15,7 @@ export default function AuctionCard({ auction }: Props) {
           <CarImage imageUrl={auction.imageUrl} />
 
           <div className="absolute bottom-2 left-2">
-            <CountdownTimer auctionEnd={auction.auctionEnd.toISOString()} />
+            <CountdownTimer auctionEnd={auction.auctionEnd.toString()} />
           </div>
         </div>
       </CardContent>
