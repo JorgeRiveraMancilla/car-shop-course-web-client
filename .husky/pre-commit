@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🎨 Formatting code..."
+npx lint-staged
+
+echo "🔍 Running linter..."
+npm run lint
+
+echo "✅ Adding formatted files to commit..."
+git add .
