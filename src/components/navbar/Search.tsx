@@ -1,6 +1,6 @@
 'use client';
 
-import { useParamsStore } from '@/hooks/useParamsStore';
+import { useParamsStore } from '@/stores/useParamsStore';
 import { ChangeEvent, FormEvent } from 'react';
 import { Input } from '../ui/input';
 import { CiSearch } from 'react-icons/ci';

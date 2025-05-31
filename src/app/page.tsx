@@ -4,7 +4,7 @@ import AppPagination from '@/components/pagination';
 import AuctionCard from '@/components/auction-card';
 import EmptyState from '@/components/auction-card/EmptyState';
 import AuctionFilter from '@/components/auction-filter';
-import { useParamsStore } from '@/hooks/useParamsStore';
+import { useParamsStore } from '@/stores/useParamsStore';
 import { Auction } from '@/models/auctionModel';
 import { TSearchResult } from '@/models/searchModel';
 import searchClient from '@/services/SearchClient';

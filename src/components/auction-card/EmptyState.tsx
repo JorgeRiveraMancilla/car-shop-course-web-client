@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useParamsStore } from '@/hooks/useParamsStore';
+import { useParamsStore } from '@/stores/useParamsStore';
 import { RefreshCw } from 'lucide-react';
 
 export default function EmptyState() {

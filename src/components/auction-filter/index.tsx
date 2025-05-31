@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useParamsStore } from '@/hooks/useParamsStore';
+import { useParamsStore } from '@/stores/useParamsStore';
 import { AiOutlineClockCircle, AiOutlineSortAscending } from 'react-icons/ai';
 import { BsStopwatchFill, BsTagFill } from 'react-icons/bs';
 import { Button } from '../ui/button';
