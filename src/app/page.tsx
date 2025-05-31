@@ -5,14 +5,14 @@ import AuctionCard from '@/components/auction-card';
 import EmptyState from '@/components/auction-card/EmptyState';
 import AuctionFilter from '@/components/auction-filter';
 import { useParamsStore } from '@/stores/useParamsStore';
-import { Auction } from '@/models/auctionModel';
+import { TAuction } from '@/models/auctionModel';
 import { TSearchResult } from '@/models/searchModel';
 import searchClient from '@/services/SearchClient';
 import { useEffect, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 
 export default function Home() {
-  const [data, setData] = useState<TSearchResult<Auction>>();
+  const [data, setData] = useState<TSearchResult<TAuction>>();
   const [loading, setLoading] = useState(true);
 
   const params = useParamsStore(
@@ -61,7 +61,7 @@ export default function Home() {
       {data.results.length > 0 ? (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {data.results.map((auction: Auction) => (
+            {data.results.map((auction: TAuction) => (
               <AuctionCard key={auction.id} auction={auction} />
             ))}
           </div>

@@ -1,13 +1,13 @@
-import { Auction } from "@/models/auctionModel";
-import CarImage from "./CarImage";
-import CountdownTimer from "./CountdownTimer";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { TAuction } from '@/models/auctionModel';
+import CarImage from './CarImage';
+import CountdownTimer from './CountdownTimer';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
-type Props = {
-  auction: Auction;
+type TAuctionCardProps = {
+  auction: TAuction;
 };
 
-export default function AuctionCard({ auction }: Props) {
+export default function AuctionCard({ auction }: TAuctionCardProps) {
   return (
     <Card className="group hover:shadow-lg transition overflow-hidden">
       <CardContent className="p-0">

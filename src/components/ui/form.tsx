@@ -64,12 +64,12 @@ const useFormField = () => {
   };
 };
 
-type FormItemContextValue = {
+type TFormItemContextValue = {
   id: string;
 };
 
-const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
+const FormItemContext = React.createContext<TFormItemContextValue>(
+  {} as TFormItemContextValue
 );
 
 const FormItem = React.forwardRef<

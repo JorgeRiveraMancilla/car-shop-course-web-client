@@ -1,4 +1,4 @@
-export type Auction = {
+export type TAuction = {
   id: string;
   reservePrice: number;
   seller: string;
@@ -17,7 +17,7 @@ export type Auction = {
   imageUrl: string;
 };
 
-export type CreateAuction = {
+export type TCreateAuction = {
   make: string;
   model: string;
   year: number;
@@ -28,7 +28,7 @@ export type CreateAuction = {
   auctionEnd: Date;
 };
 
-export type UpdateAuction = {
+export type TUpdateAuction = {
   make?: string;
   model?: string;
   year?: number;

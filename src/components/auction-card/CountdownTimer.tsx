@@ -51,10 +51,10 @@ const renderer = ({
   );
 };
 
-type Props = {
+type TCountdownTimerProps = {
   auctionEnd: string;
 };
 
-export default function CountdownTimer({ auctionEnd }: Props) {
+export default function CountdownTimer({ auctionEnd }: TCountdownTimerProps) {
   return <Countdown date={auctionEnd} renderer={renderer} />;
 }

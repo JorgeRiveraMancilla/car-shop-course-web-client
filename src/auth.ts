@@ -1,30 +1,30 @@
-import NextAuth, { Profile } from "next-auth";
-import { OIDCConfig } from "next-auth/providers";
-import DuendeIDS6Provider from "next-auth/providers/duende-identity-server6";
+import NextAuth, { Profile } from 'next-auth';
+import { OIDCConfig } from 'next-auth/providers';
+import DuendeIDS6Provider from 'next-auth/providers/duende-identity-server6';
 
-type DuendeIDServerProfile = Omit<Profile, "username"> & {
+type TDuendeIDServerProfile = Omit<Profile, 'username'> & {
   username?: string;
 };
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   debug: true,
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   providers: [
     DuendeIDS6Provider({
-      id: "id-server",
-      clientId: "nextApp",
-      clientSecret: "secret",
+      id: 'id-server',
+      clientId: 'nextApp',
+      clientSecret: 'secret',
       issuer: process.env.ID_SERVER_ISSUER,
       authorization: {
         params: {
-          scope: "openid profile auctionApp",
-          prompt: "login",
+          scope: 'openid profile auctionApp',
+          prompt: 'login',
         },
       },
-      checks: ["pkce", "state"],
-    } as OIDCConfig<DuendeIDServerProfile>),
+      checks: ['pkce', 'state'],
+    } as OIDCConfig<TDuendeIDServerProfile>),
   ],
   callbacks: {
     async authorized({ auth }) {

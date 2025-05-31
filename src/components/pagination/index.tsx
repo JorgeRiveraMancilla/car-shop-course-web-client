@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Pagination,
@@ -6,16 +6,16 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-} from "@/components/ui/pagination";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+} from '@/components/ui/pagination';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-type PaginationButtonProps = {
+type TPaginationButtonProps = {
   className?: string;
   onClick: () => void;
 };
 
-type Props = {
+type TAppPaginationProps = {
   currentPage: number;
   totalPages: number;
   handlePageChange: (page: number) => void;
@@ -25,11 +25,11 @@ export default function AppPagination({
   currentPage,
   totalPages,
   handlePageChange,
-}: Props) {
+}: TAppPaginationProps) {
   const CustomPaginationPrevious = ({
     className,
     onClick,
-  }: PaginationButtonProps) => (
+  }: TPaginationButtonProps) => (
     <Button
       variant="outline"
       className={`gap-1 pl-2.5 ${className}`}
@@ -44,7 +44,7 @@ export default function AppPagination({
   const CustomPaginationNext = ({
     className,
     onClick,
-  }: PaginationButtonProps) => (
+  }: TPaginationButtonProps) => (
     <Button
       variant="outline"
       className={`gap-1 pr-2.5 ${className}`}
@@ -64,8 +64,8 @@ export default function AppPagination({
             onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
             className={
               currentPage <= 1
-                ? "pointer-events-none opacity-50"
-                : "cursor-pointer"
+                ? 'pointer-events-none opacity-50'
+                : 'cursor-pointer'
             }
           />
         </PaginationItem>
@@ -111,8 +111,8 @@ export default function AppPagination({
             }
             className={
               currentPage >= totalPages
-                ? "pointer-events-none opacity-50"
-                : "cursor-pointer"
+                ? 'pointer-events-none opacity-50'
+                : 'cursor-pointer'
             }
           />
         </PaginationItem>
