@@ -4,7 +4,7 @@ import {
   PROTECTED_ROUTES,
   AUTH_ROUTES,
   PUBLIC_ROUTES,
-} from './config/auth-config';
+} from './libs/auth-config';
 
 /**
  * Verifica si una ruta está protegida
