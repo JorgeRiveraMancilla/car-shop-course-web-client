@@ -1,3 +1,4 @@
+// src/views/index.tsx
 'use client';
 
 import AppPagination from '@/components/pagination';
@@ -5,16 +6,11 @@ import AuctionCard from '@/components/auction-card';
 import EmptyState from '@/components/auction-card/EmptyState';
 import AuctionFilter from '@/components/auction-filter';
 import { useParamsStore } from '@/stores/useParamsStore';
-import { TAuction } from '@/models/schemas/auction';
-import searchClient from '@/clients/SearchClient';
-import { useEffect, useState } from 'react';
+import { useAuctionSearch } from '@/hooks/api/auctions';
 import { useShallow } from 'zustand/shallow';
-import { TPaginationResponse } from '@/models/generics/pagination';
 
 export default function HomeView() {
-  const [data, setData] = useState<TPaginationResponse<TAuction>>();
-  const [loading, setLoading] = useState(true);
-
+  // Obtener parámetros del store de Zustand
   const params = useParamsStore(
     useShallow(state => ({
       pageNumber: state.pageNumber,
@@ -26,42 +22,80 @@ export default function HomeView() {
   );
   const setParams = useParamsStore(state => state.setParams);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await searchClient.searchItems(params);
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching auctions:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [params]);
+  // Usar React Query para la búsqueda de auctions
+  const { data, isLoading, error, isFetching, isPlaceholderData } =
+    useAuctionSearch(params);
 
   const handlePageChange = (pageNumber: number): void => {
     setParams({ pageNumber });
   };
 
-  if (loading) {
-    return <h4>Cargando...</h4>;
+  // Estados de loading
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-4">
+        <AuctionFilter />
+        <div className="flex items-center justify-center py-12">
+          <div className="text-lg">Cargando auctions...</div>
+        </div>
+      </div>
+    );
   }
 
+  // Estados de error
+  if (error) {
+    return (
+      <div className="flex flex-col gap-4">
+        <AuctionFilter />
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <h4 className="text-lg font-semibold text-red-600 mb-2">
+              Error cargando los datos
+            </h4>
+            <p className="text-gray-600 mb-4">{error.message}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Intentar nuevamente
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Si no hay datos
   if (!data) {
-    return <h4>Error cargando los datos</h4>;
+    return (
+      <div className="flex flex-col gap-4">
+        <AuctionFilter />
+        <div className="flex items-center justify-center py-12">
+          <div className="text-lg">No se pudieron cargar los datos</div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col gap-4">
       <AuctionFilter />
 
+      {/* Indicador de que se están cargando nuevos datos */}
+      {isFetching && !isLoading && (
+        <div className="text-center py-2">
+          <span className="text-sm text-gray-500">Actualizando...</span>
+        </div>
+      )}
+
       {data.results.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {data.results.map((auction: TAuction) => (
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ${
+              isFetching && isPlaceholderData ? 'opacity-50' : ''
+            }`}
+          >
+            {data.results.map(auction => (
               <AuctionCard key={auction.id} auction={auction} />
             ))}
           </div>
@@ -71,6 +105,11 @@ export default function HomeView() {
             totalPages={data.pageCount}
             handlePageChange={handlePageChange}
           />
+
+          {/* Información adicional */}
+          <div className="text-center text-sm text-gray-500">
+            Mostrando {data.results.length} de {data.totalCount} auctions
+          </div>
         </>
       ) : (
         <EmptyState />
