@@ -122,19 +122,6 @@ export const handleApiError = (
       error.response?.data
     );
 
-    // Log detallado para debugging (solo en desarrollo)
-    if (process.env.NODE_ENV === 'development') {
-      console.error('API Error Details:', {
-        type: errorType,
-        status: error.response?.status,
-        originalMessage,
-        friendlyMessage,
-        url: error.config?.url,
-        method: error.config?.method,
-        data: error.response?.data,
-      });
-    }
-
     // Mostrar notificación al usuario (excepto para 401 que redirige automáticamente)
     if (showNotification && errorType !== ErrorType.AUTHENTICATION) {
       const title =

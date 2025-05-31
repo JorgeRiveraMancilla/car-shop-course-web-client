@@ -20,7 +20,6 @@ class SearchClient extends AxiosClient {
 
       return response.data;
     } catch (error) {
-      console.error('SearchClient Error:', error);
       throw error;
     }
   }
