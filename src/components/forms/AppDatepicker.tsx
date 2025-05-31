@@ -1,30 +1,30 @@
-import React from "react";
-import { useFormContext } from "react-hook-form";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Info } from "lucide-react";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { CalendarIcon, Info } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/tooltip';
+import { Input } from '@/components/ui/input';
 
 interface AppDatepickerProps {
   name: string;
@@ -48,10 +48,10 @@ export const AppDatepicker = ({
   maxDate,
 }: AppDatepickerProps) => {
   const form = useFormContext();
-  const [selectedTime, setSelectedTime] = React.useState("00:00");
+  const [selectedTime, setSelectedTime] = React.useState('00:00');
 
   const combineDateAndTime = (date: Date, timeString: string) => {
-    const [hours, minutes] = timeString.split(":");
+    const [hours, minutes] = timeString.split(':');
     const newDate = new Date(date);
     newDate.setHours(parseInt(hours), parseInt(minutes));
     return newDate;
@@ -96,16 +96,16 @@ export const AppDatepicker = ({
                   `La hora debe ser posterior a las ${minDate
                     .getHours()
                     .toString()
-                    .padStart(2, "0")}:${minDate
+                    .padStart(2, '0')}:${minDate
                     .getMinutes()
                     .toString()
-                    .padStart(2, "0")}`
+                    .padStart(2, '0')}`
                 );
               }
               // Si es otro día, validar la fecha completa
               return (
                 value >= minDate ||
-                "La fecha seleccionada debe ser posterior a la fecha mínima permitida"
+                'La fecha seleccionada debe ser posterior a la fecha mínima permitida'
               );
             }
             return true;
@@ -114,7 +114,7 @@ export const AppDatepicker = ({
             if (maxDate) {
               return (
                 value <= maxDate ||
-                "La fecha seleccionada excede el límite permitido"
+                'La fecha seleccionada excede el límite permitido'
               );
             }
             return true;
@@ -122,7 +122,7 @@ export const AppDatepicker = ({
         },
       }}
       render={({ field }) => (
-        <FormItem className={cn("flex flex-col", className)}>
+        <FormItem className={cn('flex flex-col', className)}>
           <div className="flex items-center gap-2">
             <FormLabel className="text-base">{label}</FormLabel>
 
@@ -151,12 +151,12 @@ export const AppDatepicker = ({
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full pl-3 text-left font-normal",
-                      !field.value && "text-muted-foreground"
+                      'w-full pl-3 text-left font-normal',
+                      !field.value && 'text-muted-foreground'
                     )}
                   >
                     {field.value ? (
-                      format(field.value, "PPP", { locale: es })
+                      format(field.value, 'PPP', { locale: es })
                     ) : (
                       <span>Selecciona una fecha</span>
                     )}
@@ -169,7 +169,7 @@ export const AppDatepicker = ({
                 <Calendar
                   mode="single"
                   selected={field.value}
-                  onSelect={(date) => {
+                  onSelect={date => {
                     if (date) {
                       const newDate = showTime
                         ? combineDateAndTime(date, selectedTime)
@@ -178,7 +178,7 @@ export const AppDatepicker = ({
                       form.trigger(name);
                     }
                   }}
-                  disabled={(date) => {
+                  disabled={date => {
                     const today = new Date();
                     today.setHours(0, 0, 0, 0);
                     date.setHours(0, 0, 0, 0);
@@ -195,7 +195,7 @@ export const AppDatepicker = ({
                 <Input
                   type="time"
                   value={selectedTime}
-                  onChange={(e) => handleTimeChange(e, field)}
+                  onChange={e => handleTimeChange(e, field)}
                   className="w-32"
                 />
               </FormControl>

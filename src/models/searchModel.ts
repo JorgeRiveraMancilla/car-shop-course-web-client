@@ -1,4 +1,4 @@
-export type SearchParams = {
+export type TSearchParams = {
   searchTerm?: string;
   pageSize: number;
   pageNumber: number;
@@ -8,7 +8,7 @@ export type SearchParams = {
   filterBy?: string;
 };
 
-export type SearchResult<T> = {
+export type TSearchResult<T> = {
   results: T[];
   pageCount: number;
   totalCount: number;

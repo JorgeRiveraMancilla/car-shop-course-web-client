@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useParamsStore } from "@/hooks/useParamsStore";
-import { usePathname, useRouter } from "next/navigation";
-import { AiOutlineCar } from "react-icons/ai";
+import { useParamsStore } from '@/hooks/useParamsStore';
+import { usePathname, useRouter } from 'next/navigation';
+import { AiOutlineCar } from 'react-icons/ai';
 
 export default function Logo() {
-  const reset = useParamsStore((state) => state.reset);
+  const reset = useParamsStore(state => state.reset);
   const router = useRouter();
   const pathname = usePathname();
 
   function handleClick() {
-    if (pathname !== "/") {
-      router.push("/");
+    if (pathname !== '/') {
+      router.push('/');
     }
     reset();
   }

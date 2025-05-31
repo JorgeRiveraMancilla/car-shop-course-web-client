@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import Countdown, { zeroPad } from "react-countdown";
+import { cn } from '@/lib/utils';
+import Countdown, { zeroPad } from 'react-countdown';
 
 const renderer = ({
   days,
@@ -21,11 +21,11 @@ const renderer = ({
   const getStatusColor = () => {
     switch (true) {
       case completed:
-        return "bg-red-500";
+        return 'bg-red-500';
       case totalHours < 6:
-        return "bg-amber-500";
+        return 'bg-amber-500';
       default:
-        return "bg-green-500";
+        return 'bg-green-500';
     }
   };
 
@@ -42,7 +42,7 @@ const renderer = ({
   return (
     <div
       className={cn(
-        "border border-white text-white py-1 px-3 rounded-lg flex justify-center text-sm shadow-md backdrop-blur-sm",
+        'border border-white text-white py-1 px-3 rounded-lg flex justify-center text-sm shadow-md backdrop-blur-sm',
         getStatusColor()
       )}
     >

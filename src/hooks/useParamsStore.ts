@@ -1,29 +1,29 @@
-import { SearchParams } from "@/models/searchModel";
-import { create } from "zustand";
+import { TSearchParams } from '@/models/searchModel';
+import { create } from 'zustand';
 
-type State = SearchParams & {
+type TState = TSearchParams & {
   searchValue: string;
 };
 
-type Actions = {
-  setParams: (params: Partial<State>) => void;
+type TActions = {
+  setParams: (params: Partial<TState>) => void;
   reset: () => void;
   setSearchValue: (value: string) => void;
 };
 
-const initialState: State = {
+const initialState: TState = {
   pageNumber: 1,
   pageSize: 12,
-  searchTerm: "",
-  searchValue: "",
-  orderBy: "make",
-  filterBy: "live",
+  searchTerm: '',
+  searchValue: '',
+  orderBy: 'make',
+  filterBy: 'live',
 };
 
-export const useParamsStore = create<State & Actions>()((set) => ({
+export const useParamsStore = create<TState & TActions>()(set => ({
   ...initialState,
-  setParams: (newParams: Partial<State>) => {
-    set((state) => {
+  setParams: (newParams: Partial<TState>) => {
+    set(state => {
       if (newParams.pageNumber) {
         return {
           ...state,

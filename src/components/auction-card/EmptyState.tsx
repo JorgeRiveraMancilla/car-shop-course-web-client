@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { useParamsStore } from "@/hooks/useParamsStore";
-import { RefreshCw } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { useParamsStore } from '@/hooks/useParamsStore';
+import { RefreshCw } from 'lucide-react';
 
 export default function EmptyState() {
-  const reset = useParamsStore((state) => state.reset);
+  const reset = useParamsStore(state => state.reset);
 
   return (
     <div className="w-full bg-white rounded-lg border p-16">

@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import AppPagination from "@/components/pagination";
-import AuctionCard from "@/components/auction-card";
-import EmptyState from "@/components/auction-card/EmptyState";
-import AuctionFilter from "@/components/auction-filter";
-import { useParamsStore } from "@/hooks/useParamsStore";
-import { Auction } from "@/models/auctionModel";
-import { SearchResult } from "@/models/searchModel";
-import searchClient from "@/services/SearchClient";
-import { useEffect, useState } from "react";
-import { useShallow } from "zustand/shallow";
+import AppPagination from '@/components/pagination';
+import AuctionCard from '@/components/auction-card';
+import EmptyState from '@/components/auction-card/EmptyState';
+import AuctionFilter from '@/components/auction-filter';
+import { useParamsStore } from '@/hooks/useParamsStore';
+import { Auction } from '@/models/auctionModel';
+import { TSearchResult } from '@/models/searchModel';
+import searchClient from '@/services/SearchClient';
+import { useEffect, useState } from 'react';
+import { useShallow } from 'zustand/shallow';
 
 export default function Home() {
-  const [data, setData] = useState<SearchResult<Auction>>();
+  const [data, setData] = useState<TSearchResult<Auction>>();
   const [loading, setLoading] = useState(true);
 
   const params = useParamsStore(
-    useShallow((state) => ({
+    useShallow(state => ({
       pageNumber: state.pageNumber,
       pageSize: state.pageSize,
       searchTerm: state.searchTerm,
@@ -24,7 +24,7 @@ export default function Home() {
       filterBy: state.filterBy,
     }))
   );
-  const setParams = useParamsStore((state) => state.setParams);
+  const setParams = useParamsStore(state => state.setParams);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +33,7 @@ export default function Home() {
         const result = await searchClient.searchItems(params);
         setData(result);
       } catch (error) {
-        console.error("Error fetching auctions:", error);
+        console.error('Error fetching auctions:', error);
       } finally {
         setLoading(false);
       }
