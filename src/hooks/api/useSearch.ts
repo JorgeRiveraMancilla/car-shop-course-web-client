@@ -7,10 +7,9 @@ import { PaginationResponse } from '@/models/generics/pagination';
 import { Auction } from '@/models/schemas/auction';
 
 /**
- * Hook para búsqueda de auctions con React Query
- * Maneja automáticamente loading, error, caching y refetch
+ * Hook para búsqueda de auctions
  */
-export const useAuctionSearch = (params: SearchQueryParams) => {
+export const useSearch = (params: SearchQueryParams) => {
   return useQuery<PaginationResponse<Auction>, Error>({
     // Key única para esta búsqueda específica
     queryKey: QueryKeys.auctions.search(params),
@@ -49,21 +48,4 @@ export const useAuctionSearch = (params: SearchQueryParams) => {
     // Configuración de retry delay
     retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
-};
-
-/**
- * Hook simplificado que devuelve solo los datos principales
- * Útil cuando no necesitas control granular del estado
- */
-export const useAuctionSearchData = (params: SearchQueryParams) => {
-  const { data, isLoading, error } = useAuctionSearch(params);
-
-  return {
-    auctions: data?.results || [],
-    totalCount: data?.totalCount || 0,
-    pageCount: data?.pageCount || 0,
-    isLoading,
-    error,
-    hasResults: (data?.results?.length || 0) > 0,
-  };
 };
