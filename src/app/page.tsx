@@ -5,14 +5,14 @@ import AuctionCard from '@/components/auction-card';
 import EmptyState from '@/components/auction-card/EmptyState';
 import AuctionFilter from '@/components/auction-filter';
 import { useParamsStore } from '@/stores/useParamsStore';
-import { TAuction } from '@/models/auctionModel';
-import { TSearchResult } from '@/models/searchModel';
+import { TAuction } from '@/models/schemas/auction';
 import searchClient from '@/services/SearchClient';
 import { useEffect, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
+import { TPaginationResponse } from '@/models/generics/pagination';
 
 export default function Home() {
-  const [data, setData] = useState<TSearchResult<TAuction>>();
+  const [data, setData] = useState<TPaginationResponse<TAuction>>();
   const [loading, setLoading] = useState(true);
 
   const params = useParamsStore(

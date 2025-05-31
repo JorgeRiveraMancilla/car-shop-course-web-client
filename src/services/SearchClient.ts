@@ -1,17 +1,20 @@
-import { TSearchParams, TSearchResult } from '@/models/searchModel';
-import { TAuction } from '@/models/auctionModel';
+import { TAuction } from '@/models/schemas/auction';
 import queryString from 'query-string';
 import AxiosClient from './AxiosClient';
+import { TPaginationResponse } from '@/models/generics/pagination';
+import { TSearchQueryParams } from '@/models/requests/search';
 
 class SearchClient extends AxiosClient {
-  async searchItems(params: TSearchParams): Promise<TSearchResult<TAuction>> {
+  async searchItems(
+    params: TSearchQueryParams
+  ): Promise<TPaginationResponse<TAuction>> {
     try {
       const query = queryString.stringify(params, {
         skipNull: true,
         skipEmptyString: true,
       });
 
-      const response = await this.axios.get<TSearchResult<TAuction>>(
+      const response = await this.axios.get<TPaginationResponse<TAuction>>(
         `/search?${query}`
       );
 

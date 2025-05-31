@@ -1,7 +1,7 @@
-import { TSearchParams } from '@/models/searchModel';
+import { TSearchQueryParams } from '@/models/requests/search';
 import { create } from 'zustand';
 
-type TState = TSearchParams & {
+type TState = TSearchQueryParams & {
   searchValue: string;
 };
 

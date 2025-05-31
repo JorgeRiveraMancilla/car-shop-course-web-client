@@ -1,4 +1,4 @@
-export type TPagedResult<T> = {
+export type TPaginationResponse<T> = {
   results: T[];
   pageCount: number;
   totalCount: number;

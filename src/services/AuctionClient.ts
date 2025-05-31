@@ -1,9 +1,9 @@
-import {
-  TAuction,
-  TCreateAuction,
-  TUpdateAuction,
-} from '@/models/auctionModel';
+import { TAuction } from '@/models/schemas/auction';
 import AxiosClient from './AxiosClient';
+import {
+  TCreateAuctionRequest,
+  TUpdateAuctionRequest,
+} from '@/models/requests/auction';
 
 class AuctionClient extends AxiosClient {
   constructor() {
@@ -23,12 +23,15 @@ class AuctionClient extends AxiosClient {
     return response.data;
   }
 
-  async createAuction(auction: TCreateAuction): Promise<TAuction> {
+  async createAuction(auction: TCreateAuctionRequest): Promise<TAuction> {
     const response = await this.axios.post<TAuction>('/auction', auction);
     return response.data;
   }
 
-  async updateAuction(id: string, auction: TUpdateAuction): Promise<void> {
+  async updateAuction(
+    id: string,
+    auction: TUpdateAuctionRequest
+  ): Promise<void> {
     await this.axios.put(`/auction/${id}`, auction);
   }
 
