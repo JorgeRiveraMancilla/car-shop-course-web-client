@@ -1,3 +1,5 @@
+import { User } from 'next-auth';
+
 export interface UserDropdownProps {
-  username: string;
+  user: User;
 }

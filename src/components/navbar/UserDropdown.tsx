@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { UserDropdownProps } from './types';
 
-const UserDropdown = ({ username }: UserDropdownProps) => {
+const UserDropdown = ({ user }: UserDropdownProps) => {
   const handleSignOut = async () => {
     await signOut({
       callbackUrl: '/',
@@ -26,7 +26,7 @@ const UserDropdown = ({ username }: UserDropdownProps) => {
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
           <User2 className="h-5 w-5" />
-          <span>{username.toUpperCase()}</span>
+          <span>{user.username?.toUpperCase() ?? 'Usuario'}</span>
         </Button>
       </DropdownMenuTrigger>
 
