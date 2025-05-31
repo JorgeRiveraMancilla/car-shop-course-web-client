@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Navbar from '../components/navbar';
 import QueryProvider from '@/providers/QueryProvider';
+import AuthProvider from '@/providers/AuthProvider';
 import { Toaster } from '@/components/ui/sonner';
 import { ReactNode } from 'react';
+import Footer from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'Car Shop Course',
@@ -18,13 +20,17 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body>
-        <QueryProvider>
-          <Navbar />
+        <AuthProvider>
+          <QueryProvider>
+            <Navbar />
 
-          <main className="container mx-auto px-5 pt-10">{children}</main>
+            <main className="container mx-auto px-5 py-10">{children}</main>
 
-          <Toaster />
-        </QueryProvider>
+            <Toaster />
+
+            <Footer />
+          </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );

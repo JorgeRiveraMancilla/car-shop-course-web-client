@@ -1,12 +1,16 @@
-import NextAuth, { Profile } from 'next-auth';
-import { OIDCConfig } from 'next-auth/providers';
+import NextAuth from 'next-auth';
+import type { NextAuthConfig } from 'next-auth';
 import DuendeIDS6Provider from 'next-auth/providers/duende-identity-server6';
 
-type DuendeIDServerProfile = Omit<Profile, 'username'> & {
+type DuendeIDServerProfile = {
   username?: string;
+  sub?: string;
+  name?: string;
+  email?: string;
+  picture?: string;
 };
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+const config: NextAuthConfig = {
   debug: true,
   session: {
     strategy: 'jwt',
@@ -24,27 +28,41 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       checks: ['pkce', 'state'],
-    } as OIDCConfig<DuendeIDServerProfile>),
+      profile(profile: DuendeIDServerProfile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          username: profile.username,
+        };
+      },
+    }),
   ],
   callbacks: {
-    async authorized({ auth }) {
+    authorized({ auth }) {
       return !!auth;
     },
-    async jwt({ token, profile, account }) {
+    jwt({ token, profile, account, user }) {
       if (account?.access_token) {
         token.accessToken = account.access_token;
       }
-      if (profile) {
+      if (profile && 'username' in profile) {
         token.username = profile.username;
+      }
+      if (user && 'username' in user) {
+        token.username = user.username;
       }
       return token;
     },
-    async session({ session, token }) {
+    session({ session, token }) {
       if (token) {
-        session.user.username = token.username;
-        session.accessToken = token.accessToken;
+        session.user.username = token.username as string;
+        session.accessToken = token.accessToken as string;
       }
       return session;
     },
   },
-});
+};
+
+export const { handlers, signIn, signOut, auth } = NextAuth(config);
