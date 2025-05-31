@@ -1,15 +1,14 @@
-// src/views/index.tsx
 'use client';
 
 import AppPagination from '@/components/pagination';
-import AuctionCard from '@/components/auction-card';
-import EmptyState from '@/components/auction-card/EmptyState';
-import AuctionFilter from '@/components/auction-filter';
 import { useParamsStore } from '@/stores/useParamsStore';
 import { useAuctionSearch } from '@/hooks/api/auctions';
 import { useShallow } from 'zustand/shallow';
+import AuctionCard from './components/auction-card';
+import EmptyState from './components/auction-card/EmptyState';
+import FilterBar from './components/filter-bar';
 
-export default function HomeView() {
+const HomeView = () => {
   // Obtener parámetros del store de Zustand
   const params = useParamsStore(
     useShallow(state => ({
@@ -34,7 +33,7 @@ export default function HomeView() {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4">
-        <AuctionFilter />
+        <FilterBar />
         <div className="flex items-center justify-center py-12">
           <div className="text-lg">Cargando auctions...</div>
         </div>
@@ -46,7 +45,7 @@ export default function HomeView() {
   if (error) {
     return (
       <div className="flex flex-col gap-4">
-        <AuctionFilter />
+        <FilterBar />
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
             <h4 className="text-lg font-semibold text-red-600 mb-2">
@@ -69,7 +68,7 @@ export default function HomeView() {
   if (!data) {
     return (
       <div className="flex flex-col gap-4">
-        <AuctionFilter />
+        <FilterBar />
         <div className="flex items-center justify-center py-12">
           <div className="text-lg">No se pudieron cargar los datos</div>
         </div>
@@ -79,7 +78,7 @@ export default function HomeView() {
 
   return (
     <div className="flex flex-col gap-4">
-      <AuctionFilter />
+      <FilterBar />
 
       {/* Indicador de que se están cargando nuevos datos */}
       {isFetching && !isLoading && (
@@ -116,4 +115,6 @@ export default function HomeView() {
       )}
     </div>
   );
-}
+};
+
+export default HomeView;

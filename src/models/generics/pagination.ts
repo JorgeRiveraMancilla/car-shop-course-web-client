@@ -1,5 +1,5 @@
-export type TPaginationResponse<T> = {
+export interface PaginationResponse<T> {
   results: T[];
   pageCount: number;
   totalCount: number;
-};
+}

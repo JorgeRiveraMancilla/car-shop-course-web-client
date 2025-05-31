@@ -1,52 +1,42 @@
-import React from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Info } from "lucide-react";
+} from '@/components/ui/tooltip';
+import { Info } from 'lucide-react';
+import { ChangeEvent } from 'react';
+import { TextInputProps } from './types';
 
-interface AppInputTextProps {
-  name: string;
-  label: string;
-  placeholder?: string;
-  type?: "text" | "number" | "url";
-  tooltip?: string;
-  className?: string;
-  rules?: Record<string, unknown>;
-  onValueChange?: (value: string | number) => void;
-}
-
-export const AppInputText = ({
+const TextInput = ({
   name,
   label,
   placeholder,
-  type = "text",
+  type = 'text',
   tooltip,
   className,
   rules,
   onValueChange,
-}: AppInputTextProps) => {
+}: TextInputProps) => {
   const form = useFormContext();
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: ChangeEvent<HTMLInputElement>,
     onChange: (...event: unknown[]) => void
   ) => {
     const value =
-      type === "number"
-        ? e.target.value === ""
-          ? ""
+      type === 'number'
+        ? e.target.value === ''
+          ? ''
           : parseInt(e.target.value)
         : e.target.value;
     onChange(value);
@@ -87,8 +77,8 @@ export const AppInputText = ({
               placeholder={placeholder}
               className="focus-visible:ring-1"
               {...field}
-              value={field.value || ""}
-              onChange={(e) => handleChange(e, field.onChange)}
+              value={field.value || ''}
+              onChange={e => handleChange(e, field.onChange)}
               onBlur={field.onBlur}
             />
           </FormControl>
@@ -99,3 +89,5 @@ export const AppInputText = ({
     />
   );
 };
+
+export default TextInput;

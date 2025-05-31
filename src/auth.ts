@@ -2,7 +2,7 @@ import NextAuth, { Profile } from 'next-auth';
 import { OIDCConfig } from 'next-auth/providers';
 import DuendeIDS6Provider from 'next-auth/providers/duende-identity-server6';
 
-type TDuendeIDServerProfile = Omit<Profile, 'username'> & {
+type DuendeIDServerProfile = Omit<Profile, 'username'> & {
   username?: string;
 };
 
@@ -24,7 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       checks: ['pkce', 'state'],
-    } as OIDCConfig<TDuendeIDServerProfile>),
+    } as OIDCConfig<DuendeIDServerProfile>),
   ],
   callbacks: {
     async authorized({ auth }) {

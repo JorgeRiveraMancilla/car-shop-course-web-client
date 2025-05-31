@@ -2,16 +2,16 @@ import { useQuery } from '@tanstack/react-query';
 import { searchClient } from '@/clients/SearchClient';
 import { QueryKeys } from '@/libs/query-keys';
 import { handleApiError } from '@/libs/error-handler';
-import { TSearchQueryParams } from '@/models/requests/search';
-import { TPaginationResponse } from '@/models/generics/pagination';
-import { TAuction } from '@/models/schemas/auction';
+import { SearchQueryParams } from '@/models/requests/search';
+import { PaginationResponse } from '@/models/generics/pagination';
+import { Auction } from '@/models/schemas/auction';
 
 /**
  * Hook para búsqueda de auctions con React Query
  * Maneja automáticamente loading, error, caching y refetch
  */
-export const useAuctionSearch = (params: TSearchQueryParams) => {
-  return useQuery<TPaginationResponse<TAuction>, Error>({
+export const useAuctionSearch = (params: SearchQueryParams) => {
+  return useQuery<PaginationResponse<Auction>, Error>({
     // Key única para esta búsqueda específica
     queryKey: QueryKeys.auctions.search(params),
 
@@ -55,7 +55,7 @@ export const useAuctionSearch = (params: TSearchQueryParams) => {
  * Hook simplificado que devuelve solo los datos principales
  * Útil cuando no necesitas control granular del estado
  */
-export const useAuctionSearchData = (params: TSearchQueryParams) => {
+export const useAuctionSearchData = (params: SearchQueryParams) => {
   const { data, isLoading, error } = useAuctionSearch(params);
 
   return {

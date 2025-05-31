@@ -4,17 +4,17 @@ import { useParamsStore } from '@/stores/useParamsStore';
 import { usePathname, useRouter } from 'next/navigation';
 import { AiOutlineCar } from 'react-icons/ai';
 
-export default function Logo() {
+const LogoIcon = () => {
   const reset = useParamsStore(state => state.reset);
   const router = useRouter();
   const pathname = usePathname();
 
-  function handleClick() {
+  const handleClick = () => {
     if (pathname !== '/') {
       router.push('/');
     }
     reset();
-  }
+  };
 
   return (
     <div
@@ -26,4 +26,6 @@ export default function Logo() {
       <span>Subastas</span>
     </div>
   );
-}
+};
+
+export default LogoIcon;

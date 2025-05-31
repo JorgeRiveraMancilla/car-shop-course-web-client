@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -25,19 +25,11 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { Input } from '@/components/ui/input';
+import { DatepickerInputProps } from './types';
 
-interface AppDatepickerProps {
-  name: string;
-  label: string;
-  tooltip?: string;
-  className?: string;
-  rules?: Record<string, unknown>;
-  showTime?: boolean;
-  minDate?: Date;
-  maxDate?: Date;
-}
+// TODO: This component have specific validation for minDate and maxDate, but it should be more generic
 
-export const AppDatepicker = ({
+const DatepickerInput = ({
   name,
   label,
   tooltip,
@@ -46,9 +38,9 @@ export const AppDatepicker = ({
   showTime = false,
   minDate,
   maxDate,
-}: AppDatepickerProps) => {
+}: DatepickerInputProps) => {
   const form = useFormContext();
-  const [selectedTime, setSelectedTime] = React.useState('00:00');
+  const [selectedTime, setSelectedTime] = useState('00:00');
 
   const combineDateAndTime = (date: Date, timeString: string) => {
     const [hours, minutes] = timeString.split(':');
@@ -66,7 +58,7 @@ export const AppDatepicker = ({
   };
 
   const handleTimeChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: ChangeEvent<HTMLInputElement>,
     field: {
       onChange: (value: Date) => void;
       value: Date;
@@ -208,3 +200,5 @@ export const AppDatepicker = ({
     />
   );
 };
+
+export default DatepickerInput;

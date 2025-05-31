@@ -1,25 +1,22 @@
-"use client";
+'use client';
 
-import { User2 } from "lucide-react";
-import { signOut } from "next-auth/react";
-import Link from "next/link";
+import { User2 } from 'lucide-react';
+import { signOut } from 'next-auth/react';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { UserDropdownProps } from './types';
 
-interface Props {
-  username: string;
-}
-
-export default function UserDropdown({ username }: Props) {
+const UserDropdown = ({ username }: UserDropdownProps) => {
   const handleSignOut = async () => {
     await signOut({
-      callbackUrl: "/",
+      callbackUrl: '/',
       redirect: true,
     });
   };
@@ -57,4 +54,6 @@ export default function UserDropdown({ username }: Props) {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default UserDropdown;

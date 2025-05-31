@@ -2,12 +2,9 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { CarImageProps } from './types';
 
-type TCarImageProps = {
-  imageUrl: string;
-};
-
-export default function CarImage({ imageUrl }: TCarImageProps) {
+const CarImage = ({ imageUrl }: CarImageProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -26,4 +23,6 @@ export default function CarImage({ imageUrl }: TCarImageProps) {
       />
     </div>
   );
-}
+};
+
+export default CarImage;

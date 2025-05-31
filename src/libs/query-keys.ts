@@ -1,4 +1,4 @@
-import { TSearchQueryParams } from '@/models/requests/search';
+import { SearchQueryParams } from '@/models/requests/search';
 
 /**
  * Query keys centralizadas para React Query
@@ -11,7 +11,7 @@ export const QueryKeys = {
     all: ['auctions'] as const,
 
     // Búsquedas con parámetros
-    search: (params: TSearchQueryParams) =>
+    search: (params: SearchQueryParams) =>
       [...QueryKeys.auctions.all, 'search', params] as const,
 
     // Auction individual por ID

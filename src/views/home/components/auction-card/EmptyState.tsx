@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useParamsStore } from '@/stores/useParamsStore';
 import { RefreshCw } from 'lucide-react';
 
-export default function EmptyState() {
+const EmptyState = () => {
   const reset = useParamsStore(state => state.reset);
 
   return (
@@ -44,4 +44,6 @@ export default function EmptyState() {
       </div>
     </div>
   );
-}
+};
+
+export default EmptyState;

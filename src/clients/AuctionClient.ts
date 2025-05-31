@@ -1,8 +1,8 @@
-import { TAuction } from '@/models/schemas/auction';
+import { Auction } from '@/models/schemas/auction';
 import AxiosClient from './AxiosClient';
 import {
-  TCreateAuctionRequest,
-  TUpdateAuctionRequest,
+  CreateAuctionRequest,
+  UpdateAuctionRequest,
 } from '@/models/requests/auction';
 
 class AuctionClient extends AxiosClient {
@@ -10,27 +10,27 @@ class AuctionClient extends AxiosClient {
     super();
   }
 
-  async getAllAuctions(date?: string): Promise<TAuction[]> {
+  async getAllAuctions(date?: string): Promise<Auction[]> {
     const params = date ? { date } : undefined;
-    const response = await this.axios.get<TAuction[]>('/auction', {
+    const response = await this.axios.get<Auction[]>('/auction', {
       params,
     });
     return response.data;
   }
 
-  async getAuctionById(id: string): Promise<TAuction> {
-    const response = await this.axios.get<TAuction>(`/auction/${id}`);
+  async getAuctionById(id: string): Promise<Auction> {
+    const response = await this.axios.get<Auction>(`/auction/${id}`);
     return response.data;
   }
 
-  async createAuction(auction: TCreateAuctionRequest): Promise<TAuction> {
-    const response = await this.axios.post<TAuction>('/auction', auction);
+  async createAuction(auction: CreateAuctionRequest): Promise<Auction> {
+    const response = await this.axios.post<Auction>('/auction', auction);
     return response.data;
   }
 
   async updateAuction(
     id: string,
-    auction: TUpdateAuctionRequest
+    auction: UpdateAuctionRequest
   ): Promise<void> {
     await this.axios.put(`/auction/${id}`, auction);
   }

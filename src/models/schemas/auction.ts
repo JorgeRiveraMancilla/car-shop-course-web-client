@@ -1,4 +1,4 @@
-export type TAuction = {
+export interface Auction {
   id: string;
   reservePrice: number;
   seller: string;
@@ -15,4 +15,4 @@ export type TAuction = {
   color: string;
   mileage: number;
   imageUrl: string;
-};
+}

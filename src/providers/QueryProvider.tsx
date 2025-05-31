@@ -4,11 +4,11 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '@/libs/react-query';
 import { setErrorNotifier } from '@/libs/error-handler';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { toast } from 'sonner';
 
 interface QueryProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function QueryProvider({ children }: QueryProviderProps) {

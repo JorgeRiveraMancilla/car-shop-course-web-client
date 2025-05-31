@@ -1,4 +1,4 @@
-export type TSearchQueryParams = {
+export interface SearchQueryParams {
   searchTerm?: string;
   pageSize: number;
   pageNumber: number;
@@ -6,4 +6,4 @@ export type TSearchQueryParams = {
   winner?: string;
   orderBy?: string;
   filterBy?: string;
-};
+}

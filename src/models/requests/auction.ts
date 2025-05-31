@@ -1,4 +1,4 @@
-export type TCreateAuctionRequest = {
+export interface CreateAuctionRequest {
   make: string;
   model: string;
   year: number;
@@ -7,12 +7,12 @@ export type TCreateAuctionRequest = {
   imageUrl: string;
   reservePrice: number;
   auctionEnd: Date;
-};
+}
 
-export type TUpdateAuctionRequest = {
+export interface UpdateAuctionRequest {
   make?: string;
   model?: string;
   year?: number;
   color?: string;
   mileage?: number;
-};
+}

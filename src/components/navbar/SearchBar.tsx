@@ -6,7 +6,7 @@ import { Input } from '../ui/input';
 import { CiSearch } from 'react-icons/ci';
 import { usePathname, useRouter } from 'next/navigation';
 
-export default function Search() {
+const SearchBar = () => {
   const setParams = useParamsStore(state => state.setParams);
   const searchValue = useParamsStore(state => state.searchValue);
   const setSearchValue = useParamsStore(state => state.setSearchValue);
@@ -14,17 +14,17 @@ export default function Search() {
   const router = useRouter();
   const pathname = usePathname();
 
-  function onChangeSearch(e: ChangeEvent<HTMLInputElement>) {
+  const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-  }
+  };
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (pathname !== '/') {
       router.push('/');
     }
     setParams({ searchTerm: searchValue.trim() });
-  }
+  };
 
   return (
     <div className="flex-1">
@@ -46,4 +46,6 @@ export default function Search() {
       </form>
     </div>
   );
-}
+};
+
+export default SearchBar;

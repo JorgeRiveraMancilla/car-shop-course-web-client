@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { signIn } from "next-auth/react";
-import { Button } from "../ui/button";
+import { signIn } from 'next-auth/react';
+import { Button } from '../ui/button';
 
-export default function LoginButton() {
-  function login() {
-    signIn("id-server", {
-      callbackUrl: "/",
-      prompt: "login",
+const LoginButton = () => {
+  const login = () => {
+    signIn('id-server', {
+      callbackUrl: '/',
+      prompt: 'login',
       redirect: true,
     });
-  }
+  };
 
   return (
     <Button
@@ -21,4 +21,6 @@ export default function LoginButton() {
       Iniciar Sesión
     </Button>
   );
-}
+};
+
+export default LoginButton;

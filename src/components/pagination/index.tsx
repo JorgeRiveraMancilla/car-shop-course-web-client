@@ -7,60 +7,20 @@ import {
   PaginationItem,
   PaginationLink,
 } from '@/components/ui/pagination';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { AppPaginationProps } from './types';
+import PaginationButton from './PaginationButton';
 
-type TPaginationButtonProps = {
-  className?: string;
-  onClick: () => void;
-};
-
-type TAppPaginationProps = {
-  currentPage: number;
-  totalPages: number;
-  handlePageChange: (page: number) => void;
-};
-
-export default function AppPagination({
+const AppPagination = ({
   currentPage,
   totalPages,
   handlePageChange,
-}: TAppPaginationProps) {
-  const CustomPaginationPrevious = ({
-    className,
-    onClick,
-  }: TPaginationButtonProps) => (
-    <Button
-      variant="outline"
-      className={`gap-1 pl-2.5 ${className}`}
-      onClick={onClick}
-    >
-      <ChevronLeft className="h-4 w-4" />
-
-      <span>Anterior</span>
-    </Button>
-  );
-
-  const CustomPaginationNext = ({
-    className,
-    onClick,
-  }: TPaginationButtonProps) => (
-    <Button
-      variant="outline"
-      className={`gap-1 pr-2.5 ${className}`}
-      onClick={onClick}
-    >
-      <span>Siguiente</span>
-
-      <ChevronRight className="h-4 w-4" />
-    </Button>
-  );
-
+}: AppPaginationProps) => {
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <CustomPaginationPrevious
+          <PaginationButton
+            type="previous"
             onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
             className={
               currentPage <= 1
@@ -105,7 +65,8 @@ export default function AppPagination({
         })}
 
         <PaginationItem>
-          <CustomPaginationNext
+          <PaginationButton
+            type="next"
             onClick={() =>
               currentPage < totalPages && handlePageChange(currentPage + 1)
             }
@@ -119,4 +80,6 @@ export default function AppPagination({
       </PaginationContent>
     </Pagination>
   );
-}
+};
+
+export default AppPagination;

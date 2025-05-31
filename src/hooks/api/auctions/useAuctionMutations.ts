@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { auctionClient } from '@/clients/AuctionClient';
 import { QueryKeys, QueryInvalidation } from '@/libs/query-keys';
 import { handleApiError } from '@/libs/error-handler';
-import { TAuction } from '@/models/schemas/auction';
+import { Auction } from '@/models/schemas/auction';
 import {
-  TCreateAuctionRequest,
-  TUpdateAuctionRequest,
+  CreateAuctionRequest,
+  UpdateAuctionRequest,
 } from '@/models/requests/auction';
 import { toast } from 'sonner';
 
@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 export const useCreateAuction = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<TAuction, Error, TCreateAuctionRequest>({
+  return useMutation<Auction, Error, CreateAuctionRequest>({
     mutationFn: async auctionData => {
       try {
         return await auctionClient.createAuction(auctionData);
@@ -56,7 +56,7 @@ export const useCreateAuction = () => {
 export const useUpdateAuction = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, { id: string; data: TUpdateAuctionRequest }>({
+  return useMutation<void, Error, { id: string; data: UpdateAuctionRequest }>({
     mutationFn: async ({ id, data }) => {
       try {
         return await auctionClient.updateAuction(id, data);

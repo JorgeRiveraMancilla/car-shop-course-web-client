@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -8,48 +9,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useParamsStore } from '@/stores/useParamsStore';
-import { AiOutlineClockCircle, AiOutlineSortAscending } from 'react-icons/ai';
-import { BsStopwatchFill, BsTagFill } from 'react-icons/bs';
-import { Button } from '../ui/button';
-import { GiFinishLine, GiFlame } from 'react-icons/gi';
+import { orderButtons, filterButtons, pageSizeOptions } from './constants';
 
-const pageSizeOptions = [4, 8, 12, 16];
-const orderButtons = [
-  {
-    label: 'Alfabético',
-    icon: AiOutlineSortAscending,
-    value: 'make',
-  },
-  {
-    label: 'Tiempo',
-    icon: AiOutlineClockCircle,
-    value: 'endingSoon',
-  },
-  {
-    label: 'Año',
-    icon: BsTagFill,
-    value: 'new',
-  },
-];
-const filterButtons = [
-  {
-    label: 'Disponibles',
-    icon: GiFlame,
-    value: 'live',
-  },
-  {
-    label: 'Finaliza pronto',
-    icon: GiFinishLine,
-    value: 'endingSoon',
-  },
-  {
-    label: 'Terminados',
-    icon: BsStopwatchFill,
-    value: 'finished',
-  },
-];
-
-export default function AuctionFilter() {
+const FilterBar = () => {
   const pageSize = useParamsStore(state => state.pageSize);
   const setParams = useParamsStore(state => state.setParams);
   const orderBy = useParamsStore(state => state.orderBy);
@@ -115,4 +77,6 @@ export default function AuctionFilter() {
       </div>
     </div>
   );
-}
+};
+
+export default FilterBar;
