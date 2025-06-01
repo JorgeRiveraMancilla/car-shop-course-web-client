@@ -5,41 +5,85 @@ import {
   UpdateAuctionRequest,
 } from '@/models/requests/auction';
 
+/**
+ * Cliente para manejar operaciones de subastas
+ */
 class AuctionClient extends AxiosClient {
+  private readonly endpoint = '/auction';
+
   constructor() {
     super();
   }
 
+  /**
+   * Obtiene todas las subastas con filtrado opcional por fecha
+   */
   async getAllAuctions(date?: string): Promise<Auction[]> {
-    const params = date ? { date } : undefined;
-    const response = await this.axios.get<Auction[]>('/auction', {
-      params,
-    });
-    return response.data;
+    try {
+      const params = date ? { date } : undefined;
+      const response = await this.axios.get<Auction[]>(this.endpoint, {
+        params,
+      });
+
+      // Validar que la respuesta sea un array
+      if (!Array.isArray(response.data)) {
+        throw new Error('Respuesta inválida del servidor');
+      }
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 
+  /**
+   * Obtiene una subasta por su ID
+   */
   async getAuctionById(id: string): Promise<Auction> {
-    const response = await this.axios.get<Auction>(`/auction/${id}`);
-    return response.data;
+    try {
+      const response = await this.axios.get<Auction>(`${this.endpoint}/${id}`);
+
+      if (!response.data) {
+        throw new Error('Subasta no encontrada');
+      }
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 
+  /**
+   * Crea una nueva subasta
+   */
   async createAuction(auction: CreateAuctionRequest): Promise<Auction> {
-    const response = await this.axios.post<Auction>('/auction', auction);
-    return response.data;
+    try {
+      const response = await this.axios.post<Auction>(this.endpoint, auction);
+
+      if (!response.data) {
+        throw new Error('Error al crear la subasta');
+      }
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 
+  /**
+   * Actualiza una subasta existente
+   */
   async updateAuction(
     id: string,
     auction: UpdateAuctionRequest
   ): Promise<void> {
-    await this.axios.put(`/auction/${id}`, auction);
-  }
-
-  async deleteAuction(id: string): Promise<void> {
-    await this.axios.delete(`/auction/${id}`);
+    try {
+      await this.axios.put(`${this.endpoint}/${id}`, auction);
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
 export const auctionClient = new AuctionClient();
-
 export default auctionClient;

@@ -2,11 +2,11 @@
 
 import AppPagination from '@/components/pagination';
 import { useParamsStore } from '@/stores/useParamsStore';
-import { useAuctionSearch } from '@/hooks/api/auctions';
 import { useShallow } from 'zustand/shallow';
 import AuctionCard from './components/auction-card';
 import EmptyState from './components/auction-card/EmptyState';
 import FilterBar from './components/filter-bar';
+import { useSearch } from '@/hooks/api/useSearch';
 
 const HomeView = () => {
   // Obtener parámetros del store de Zustand
@@ -23,7 +23,7 @@ const HomeView = () => {
 
   // Usar React Query para la búsqueda de auctions
   const { data, isLoading, error, isFetching, isPlaceholderData } =
-    useAuctionSearch(params);
+    useSearch(params);
 
   const handlePageChange = (pageNumber: number): void => {
     setParams({ pageNumber });
