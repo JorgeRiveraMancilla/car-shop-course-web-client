@@ -1,7 +1,7 @@
-import { SearchQueryParams } from '@/models/requests/search';
+import { StoreParams } from '@/schemas';
 import { create } from 'zustand';
 
-type State = SearchQueryParams & {
+type State = StoreParams & {
   searchValue: string;
 };
 
@@ -14,7 +14,7 @@ type Actions = {
 const initialState: State = {
   pageNumber: 1,
   pageSize: 12,
-  searchTerm: '',
+  searchTerm: undefined,
   searchValue: '',
   orderBy: 'make',
   filterBy: 'live',

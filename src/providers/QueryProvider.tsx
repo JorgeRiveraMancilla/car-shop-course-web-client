@@ -1,36 +1,69 @@
 'use client';
 
-import { QueryClientProvider } from '@tanstack/react-query';
+import {
+  QueryClientProvider,
+  QueryCache,
+  MutationCache,
+} from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { queryClient } from '@/libs/react-query';
-import { setErrorNotifier } from '@/libs/error-handler';
-import { ReactNode, useEffect } from 'react';
+import { QueryClient } from '@tanstack/react-query';
+import { ReactNode, useMemo } from 'react';
 import { toast } from 'sonner';
 
 interface QueryProviderProps {
   children: ReactNode;
 }
 
+interface ApiError extends Error {
+  status?: number;
+  handled?: boolean;
+}
+
 export default function QueryProvider({ children }: QueryProviderProps) {
-  // Configurar Sonner como notificador de errores
-  useEffect(() => {
-    setErrorNotifier({
-      showError: (message: string, title?: string) => {
-        toast.error(message, {
-          description: title,
-          duration: 5000, // 5 segundos
-          action: {
-            label: 'Cerrar',
-            onClick: () => {},
-          },
-        });
+  const queryClient = useMemo(() => {
+    return new QueryClient({
+      defaultOptions: {
+        queries: {
+          staleTime: 1000 * 60 * 5,
+          gcTime: 1000 * 60 * 10,
+          retry: 3,
+          refetchOnWindowFocus: false,
+          refetchOnReconnect: true,
+        },
+        mutations: {
+          retry: 1,
+        },
       },
-      showWarning: (message: string, title?: string) => {
-        toast.warning(message, {
-          description: title,
-          duration: 4000, // 4 segundos
-        });
-      },
+
+      queryCache: new QueryCache({
+        onError: (error: unknown) => {
+          const apiError = error as ApiError;
+
+          if (
+            apiError?.status &&
+            apiError.status >= 500 &&
+            !apiError?.handled
+          ) {
+            toast.error('Error del servidor', {
+              description: 'Problema de conectividad. Intenta nuevamente.',
+              duration: 5000,
+            });
+          }
+        },
+      }),
+      mutationCache: new MutationCache({
+        onError: (error: unknown) => {
+          const apiError = error as ApiError;
+
+          if (!apiError?.handled) {
+            toast.error('Error en la operación', {
+              description:
+                apiError?.message || 'Ha ocurrido un error inesperado',
+              duration: 5000,
+            });
+          }
+        },
+      }),
     });
   }, []);
 

@@ -25,7 +25,6 @@ class AuctionClient extends AxiosClient {
         params,
       });
 
-      // Validar que la respuesta sea un array
       if (!Array.isArray(response.data)) {
         throw new Error('Respuesta inválida del servidor');
       }

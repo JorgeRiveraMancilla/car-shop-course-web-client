@@ -1,82 +1,69 @@
-/**
- * Constantes para validaciones de subasta
- */
-export const AUCTION_VALIDATION = {
+// src/views/home/auction/create/constants.ts
+export const FORM_VALIDATION_RULES = {
   MAKE: {
-    MIN_LENGTH: 2,
-    MAX_LENGTH: 50,
+    required: 'La marca es requerida',
+    minLength: {
+      value: 2,
+      message: 'La marca debe tener al menos 2 caracteres',
+    },
+    maxLength: {
+      value: 50,
+      message: 'La marca no puede exceder 50 caracteres',
+    },
   },
   MODEL: {
-    MIN_LENGTH: 2,
-    MAX_LENGTH: 50,
-  },
-  COLOR: {
-    MIN_LENGTH: 3,
-    MAX_LENGTH: 30,
-  },
-  YEAR: {
-    MIN: 1900,
-    MAX: new Date().getFullYear() + 1,
-  },
-  MILEAGE: {
-    MIN: 0,
-    MAX: 1000000, // 1 millón de km
-  },
-  RESERVE_PRICE: {
-    MIN: 1,
-    MAX: 10000000, // 10 millones USD
-  },
-  MIN_AUCTION_DURATION_HOURS: 24,
-} as const;
-
-/**
- * Mensajes de error personalizados
- */
-export const ERROR_MESSAGES = {
-  MAKE: {
-    REQUIRED: 'La marca es requerida',
-    MIN_LENGTH: `La marca debe tener al menos ${AUCTION_VALIDATION.MAKE.MIN_LENGTH} caracteres`,
-    MAX_LENGTH: `La marca no puede exceder ${AUCTION_VALIDATION.MAKE.MAX_LENGTH} caracteres`,
-  },
-  MODEL: {
-    REQUIRED: 'El modelo es requerido',
-    MIN_LENGTH: `El modelo debe tener al menos ${AUCTION_VALIDATION.MODEL.MIN_LENGTH} caracteres`,
-    MAX_LENGTH: `El modelo no puede exceder ${AUCTION_VALIDATION.MODEL.MAX_LENGTH} caracteres`,
-  },
-  COLOR: {
-    REQUIRED: 'El color es requerido',
-    MIN_LENGTH: `El color debe tener al menos ${AUCTION_VALIDATION.COLOR.MIN_LENGTH} caracteres`,
-    MAX_LENGTH: `El color no puede exceder ${AUCTION_VALIDATION.COLOR.MAX_LENGTH} caracteres`,
+    required: 'El modelo es requerido',
+    minLength: {
+      value: 2,
+      message: 'El modelo debe tener al menos 2 caracteres',
+    },
+    maxLength: {
+      value: 50,
+      message: 'El modelo no puede exceder 50 caracteres',
+    },
   },
   YEAR: {
-    REQUIRED: 'El año es requerido',
-    MIN: `El año debe ser mayor o igual a ${AUCTION_VALIDATION.YEAR.MIN}`,
-    MAX: 'Año inválido',
+    required: 'El año es requerido',
+    min: { value: 1900, message: 'El año debe ser mayor o igual a 1900' },
+    max: { value: new Date().getFullYear() + 1, message: 'Año inválido' },
+  },
+  COLOR: {
+    required: 'El color es requerido',
+    minLength: {
+      value: 3,
+      message: 'El color debe tener al menos 3 caracteres',
+    },
+    maxLength: {
+      value: 30,
+      message: 'El color no puede exceder 30 caracteres',
+    },
   },
   MILEAGE: {
-    REQUIRED: 'El kilometraje es requerido',
-    MIN: 'El kilometraje no puede ser negativo',
-    MAX: `El kilometraje no puede exceder ${AUCTION_VALIDATION.MILEAGE.MAX.toLocaleString()} km`,
+    required: 'El kilometraje es requerido',
+    min: { value: 0, message: 'El kilometraje no puede ser negativo' },
+    max: {
+      value: 1000000,
+      message: 'El kilometraje excede el límite permitido',
+    },
   },
   RESERVE_PRICE: {
-    REQUIRED: 'El precio de reserva es requerido',
-    MIN: 'El precio de reserva debe ser mayor a 0',
-    MAX: `El precio de reserva no puede exceder $${AUCTION_VALIDATION.RESERVE_PRICE.MAX.toLocaleString()}`,
+    required: 'El precio de reserva es requerido',
+    min: { value: 1, message: 'El precio de reserva debe ser mayor a 0' },
+    max: { value: 10000000, message: 'El precio de reserva excede el límite' },
   },
   IMAGE_URL: {
-    REQUIRED: 'La URL de la imagen es requerida',
-    INVALID: 'Debe ser una URL válida de imagen (jpg, jpeg, png, gif, webp)',
+    required: 'La URL de la imagen es requerida',
+    pattern: {
+      value: /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i,
+      message: 'Debe ser una URL válida de imagen (jpg, jpeg, png, gif, webp)',
+    },
   },
   AUCTION_END: {
-    REQUIRED: 'La fecha de término es requerida',
-    MIN_DURATION: `La subasta debe tener una duración mínima de ${AUCTION_VALIDATION.MIN_AUCTION_DURATION_HOURS} horas`,
+    required: 'La fecha de término es requerida',
   },
 } as const;
 
-/**
- * Placeholders para los campos del formulario
- */
-export const PLACEHOLDERS = {
+export const FORM_PLACEHOLDERS = {
   MAKE: 'Ej: Toyota, Ford, Chevrolet',
   MODEL: 'Ej: Corolla, Focus, Cruze',
   COLOR: 'Ej: Rojo, Azul, Blanco',
@@ -86,10 +73,7 @@ export const PLACEHOLDERS = {
   IMAGE_URL: 'https://ejemplo.com/imagen.jpg',
 } as const;
 
-/**
- * Tooltips informativos
- */
-export const TOOLTIPS = {
+export const FORM_TOOLTIPS = {
   MAKE: 'Ingresa la marca del vehículo (ej: Toyota, Ford, etc.)',
   MODEL: 'Ingresa el modelo específico del vehículo',
   COLOR: 'Color principal del vehículo',
@@ -102,49 +86,3 @@ export const TOOLTIPS = {
   AUCTION_END:
     'La subasta debe tener una duración mínima de 24 horas a partir de ahora',
 } as const;
-
-/**
- * Expresiones regulares para validaciones
- */
-export const REGEX_PATTERNS = {
-  IMAGE_URL: /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i,
-  URL: /^https?:\/\/.+/i,
-} as const;
-
-/**
- * Función helper para obtener la fecha mínima de término de subasta
- */
-export const getMinAuctionEndDate = (): Date => {
-  const now = new Date();
-  const minEndDate = new Date(now);
-  minEndDate.setHours(
-    now.getHours() + AUCTION_VALIDATION.MIN_AUCTION_DURATION_HOURS
-  );
-  return minEndDate;
-};
-
-/**
- * Función helper para validar URL de imagen
- */
-export const isValidImageUrl = (url: string): boolean => {
-  return REGEX_PATTERNS.IMAGE_URL.test(url);
-};
-
-/**
- * Función helper para formatear precio
- */
-export const formatPrice = (price: number): string => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-};
-
-/**
- * Función helper para formatear kilometraje
- */
-export const formatMileage = (mileage: number): string => {
-  return `${mileage.toLocaleString()} km`;
-};

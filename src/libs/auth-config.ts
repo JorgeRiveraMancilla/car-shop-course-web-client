@@ -3,7 +3,6 @@
  * Adaptada a tu estructura de proyecto existente
  */
 
-// Rutas que requieren autenticación
 export const PROTECTED_ROUTES = [
   '/auction/create',
   '/auction/edit',
@@ -17,7 +16,6 @@ export const PROTECTED_ROUTES = [
   '/admin',
 ] as const;
 
-// Rutas que solo usuarios no autenticados pueden acceder
 export const AUTH_ROUTES = [
   '/auth/sign-in',
   '/auth/sign-up',
@@ -28,7 +26,6 @@ export const AUTH_ROUTES = [
   '/auth/sign-out',
 ] as const;
 
-// Rutas públicas
 export const PUBLIC_ROUTES = [
   '/',
   '/auction',
@@ -41,7 +38,6 @@ export const PUBLIC_ROUTES = [
   '/help',
 ] as const;
 
-// Permisos básicos del sistema
 export const PERMISSIONS = {
   CREATE_AUCTION: 'create_auction',
   EDIT_OWN_AUCTION: 'edit_own_auction',
@@ -52,7 +48,6 @@ export const PERMISSIONS = {
   MODERATE_AUCTIONS: 'moderate_auctions',
 } as const;
 
-// Configuraciones por página
 export const PAGE_AUTH_CONFIG = {
   '/auction/create': {
     requireAuth: true,
@@ -74,7 +69,6 @@ export const PAGE_AUTH_CONFIG = {
   },
 } as const;
 
-// Mensajes de error personalizados
 export const AUTH_MESSAGES = {
   UNAUTHORIZED: 'Necesitas iniciar sesión para acceder a esta página.',
   INSUFFICIENT_PERMISSIONS:
@@ -88,7 +82,6 @@ export const AUTH_MESSAGES = {
   LOGIN_REQUIRED: 'Debes iniciar sesión para realizar esta acción.',
 } as const;
 
-// URLs de redirección por defecto
 export const DEFAULT_REDIRECTS = {
   AFTER_SIGN_IN: '/',
   AFTER_SIGN_OUT: '/',
@@ -125,12 +118,10 @@ export const isPublicRoute = (pathname: string): boolean => {
  * Obtener configuración de autenticación para una página
  */
 export const getPageAuthConfig = (pathname: string) => {
-  // Buscar configuración exacta
   const exactConfig =
     PAGE_AUTH_CONFIG[pathname as keyof typeof PAGE_AUTH_CONFIG];
   if (exactConfig) return exactConfig;
 
-  // Buscar configuración por patrón
   for (const [pattern, config] of Object.entries(PAGE_AUTH_CONFIG)) {
     const regex = new RegExp(`^${pattern.replace(/\[.*?\]/g, '[^/]+')}/?$`);
     if (regex.test(pathname)) {
@@ -138,7 +129,6 @@ export const getPageAuthConfig = (pathname: string) => {
     }
   }
 
-  // Configuración por defecto
   if (isProtectedRoute(pathname)) {
     return {
       requireAuth: true,
@@ -157,10 +147,8 @@ export const hasPermission = (
   userPermissions: string[],
   requiredPermission: string
 ): boolean => {
-  // Si no hay permisos requeridos, permitir acceso
   if (!requiredPermission) return true;
 
-  // Verificar si el usuario tiene el permiso específico
   return userPermissions.includes(requiredPermission);
 };
 

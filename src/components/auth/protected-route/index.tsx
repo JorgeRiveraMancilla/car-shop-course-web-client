@@ -21,7 +21,6 @@ const ProtectedRoute = ({
   const { isAuthenticated, isLoading, user, signIn, hasPermission, isOwner } =
     useAuth();
 
-  // Efectos para redirección
   useEffect(() => {
     if (!isLoading && !isAuthenticated && !showFallback) {
       const currentUrl =
@@ -32,15 +31,13 @@ const ProtectedRoute = ({
     }
   }, [isLoading, isAuthenticated, redirectTo, router, showFallback]);
 
-  // Mostrar loading mientras se verifica la autenticación
   if (isLoading) {
     return fallback || <AuthLoading />;
   }
 
-  // Si no está autenticado
   if (!isAuthenticated) {
     if (!showFallback) {
-      return null; // El useEffect manejará la redirección
+      return null;
     }
 
     return (
@@ -52,7 +49,6 @@ const ProtectedRoute = ({
     );
   }
 
-  // Verificar permisos requeridos
   if (requiredPermissions.length > 0) {
     const hasRequiredPermission = requiredPermissions.some(permission =>
       hasPermission(permission)
@@ -67,7 +63,6 @@ const ProtectedRoute = ({
     }
   }
 
-  // Verificar usuarios permitidos
   if (allowedUsers.length > 0) {
     const isAllowedUser =
       allowedUsers.includes(user?.username || '') ||
@@ -82,7 +77,6 @@ const ProtectedRoute = ({
     }
   }
 
-  // Verificar propiedad del recurso
   if (requireOwnership) {
     const { resourceUserId, fallbackMessage } = requireOwnership;
     if (!isOwner(resourceUserId)) {
@@ -97,7 +91,6 @@ const ProtectedRoute = ({
     }
   }
 
-  // Si todas las verificaciones pasan, renderizar los children
   return <>{children}</>;
 };
 

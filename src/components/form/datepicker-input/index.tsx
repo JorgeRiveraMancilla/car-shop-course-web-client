@@ -29,8 +29,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { DatepickerInputProps } from './types';
 
-// TODO: This component have specific validation for minDate and maxDate, but it should be more generic
-
 const DatepickerInput = ({
   name,
   label,
@@ -83,7 +81,6 @@ const DatepickerInput = ({
         validate: {
           minDateTime: (value: Date) => {
             if (minDate) {
-              // Si es el mismo día, validar la hora
               if (isDateSameDay(value, minDate)) {
                 return (
                   value.getTime() >= minDate.getTime() ||
@@ -96,7 +93,7 @@ const DatepickerInput = ({
                     .padStart(2, '0')}`
                 );
               }
-              // Si es otro día, validar la fecha completa
+
               return (
                 value >= minDate ||
                 'La fecha seleccionada debe ser posterior a la fecha mínima permitida'

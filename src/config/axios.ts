@@ -16,7 +16,6 @@ export const createAxiosInstance = (): AxiosInstance => {
     timeout: 30000,
   });
 
-  // Request interceptor
   instance.interceptors.request.use(
     async config => {
       if (!config.headers) {
@@ -36,7 +35,6 @@ export const createAxiosInstance = (): AxiosInstance => {
     error => Promise.reject(error)
   );
 
-  // Response interceptor
   instance.interceptors.response.use(
     response => response,
     async (error: AxiosError) => {
@@ -53,10 +51,8 @@ export const createAxiosInstance = (): AxiosInstance => {
         throw networkError;
       }
 
-      // Handle 401 errors
       if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
-        // Handle token refresh logic here
       }
 
       throw error;

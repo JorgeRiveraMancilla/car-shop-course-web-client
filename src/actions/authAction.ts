@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { auth } from "@/auth";
-import { DefaultSession } from "next-auth";
+import { auth } from '@/auth';
+import { DefaultSession } from 'next-auth';
 
-export async function getCurrentUser(): Promise<DefaultSession["user"] | null> {
+export async function getCurrentUser(): Promise<DefaultSession['user'] | null> {
   try {
     const session = await auth();
 
